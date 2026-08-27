@@ -2,9 +2,9 @@
 
 import { useActionState } from "react";
 import { Lock, User, LogIn, AlertCircle } from "lucide-react";
-import { Footer } from "@/components/Footer";
-import { SubmitButton } from "@/components/SubmitButton";
-import { loginAction } from "@/app/actions/auth.actions";
+import { Footer } from "@/src/shared/presentation/components/Footer";
+import { SubmitButton } from "@/src/shared/presentation/components/SubmitButton";
+import { loginAction } from "@/src/features/auth/presentation/actions/auth.actions";
 
 export default function LoginPage() {
   // O hook useActionState substitui o useTransition e gerencia o retorno (erros) da Server Action

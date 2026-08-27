@@ -1,9 +1,9 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { ProtocolInfoCard } from "@/components/ProtocolInfoCard";
-import { TreatmentInstructions } from "@/components/TreatmentInstructions";
+import { Header } from "@/src/shared/presentation/components/Header";
+import { Footer } from "@/src/shared/presentation/components/Footer";
+import { ProtocolInfoCard } from "@/src/features/appointments/presentation/components/ProtocolInfoCard";
+import { TreatmentInstructions } from "@/src/features/appointments/presentation/components/TreatmentInstructions";
 import { notFound, redirect } from "next/navigation";
-import { buscarAgendamentoPorProtocolo } from "@/app/actions/agendamentos.actions";
+import { buscarAgendamentoPorProtocolo } from "@/src/features/appointments/presentation/actions/agendamentos.actions";
 import { cookies } from "next/headers";
 
 type PageProps = {

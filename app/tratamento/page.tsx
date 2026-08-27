@@ -1,6 +1,6 @@
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { TratamentoLoginCard } from "@/components/TratamentoLoginCard";
+import { Footer } from "@/src/shared/presentation/components/Footer";
+import { Header } from "@/src/shared/presentation/components/Header";
+import { TratamentoLoginCard } from "@/src/features/appointments/presentation/components/TratamentoLoginCard";
 
 export default function TratamentoPage() {
   return (

@@ -1,9 +1,9 @@
-import { Header } from "@/components/Header";
-import { HeroSection } from "@/components/HeroSection";
-import { RegistrationSection } from "@/components/RegistrationSection";
-import { FaqSection } from "@/components/FaqSection";
-import { Footer } from "@/components/Footer";
-import ScrollToTopButton from "@/components/ScrollToTopButton";
+import { Header } from "@/src/shared/presentation/components/Header";
+import { HeroSection } from "@/src/features/appointments/presentation/components/HeroSection";
+import { RegistrationSection } from "@/src/features/appointments/presentation/components/RegistrationSection";
+import { FaqSection } from "@/src/features/appointments/presentation/components/FaqSection";
+import { Footer } from "@/src/shared/presentation/components/Footer";
+import ScrollToTopButton from "@/src/shared/presentation/components/ScrollToTopButton";
 
 export default function Home() {
   return (
