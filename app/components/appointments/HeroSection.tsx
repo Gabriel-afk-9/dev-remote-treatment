@@ -3,6 +3,7 @@ import { ArrowRight, BadgeCheck, CircleHelp, HeartHandshake, Sparkles } from "lu
 export function HeroSection() {
   return (
     <section
+      id="inicio"
       className="flex items-start bg-linear-to-b from-brand to-background pt-8 min-h-screen hero"
       // style={{ backgroundImage: "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)" }}
     >
@@ -12,19 +13,19 @@ export function HeroSection() {
             <HeartHandshake size={14} />
             Tratamento e acolhimento
           </span>
-          <h1 className="max-w-3xl font-bold text-foreground text-4xl sm:text-5xl lg:text-6xl leading-tight">
+          <h1 className="max-w-3xl font-bold text-white text-shadow-lg text-4xl sm:text-5xl lg:text-6xl leading-tight">
             Tratamento Espiritual à Distância
           </h1>
-          <p className="max-w-2xl text-foreground/80 text-base sm:text-lg leading-7">
+          <p className="max-w-2xl text-foreground/90 text-base sm:text-lg leading-7">
             O Centro Espírita Luz da Esperança oferece tratamento por meio da oração e atendimentos virtuais. Participe das transmissões e receba amparo através de Evangelhoterapia, passes e vibrações sem sair de casa.
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <a href="#inscricao" className="gap-2 bg-brand hover:bg-brand-hover border-brand hover:border-brand-hover text-background btn">
+            <a href="#inscricao" className="gap-2 bg-brand hover:bg-brand-hover border-brand hover:border-brand-hover text-background btn rounded-lg">
               Fazer inscrição
               <ArrowRight size={16} /> 
             </a>
-            <a href="#faq" className="gap-2 bg-background hover:bg-neutral border-neutral/25 hover:border-neutral text-foreground hover:text-background btn">
+            <a href="#faq" className="gap-2 bg-background hover:bg-brand border-brand/25 hover:border-brand text-foreground hover:text-background btn rounded-lg">
               <CircleHelp size={16} />
               Ver orientações
             </a>

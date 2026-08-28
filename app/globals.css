@@ -10,10 +10,12 @@
   --background-hover: #EAEAEA;
   
   --foreground: #242424;
-  --foreground-hover: #121212; /* Definido um tom mais escuro para o hover */
+  --foreground-hover: #58975F; /* Definido um tom mais escuro para o hover */
   
   --card: #FAFAFA;
   --card-hover: #EAEAEA;
+
+  --white-txt: #fffbfb;
   
   /* ==========================================
      CORES SEMÂNTICAS (MARCA E INTERAÇÃO)
@@ -45,8 +47,17 @@
   --color-neutral: var(--neutral);
   --color-neutral-hover: var(--neutral-hover);
 
+  --color-white-txt: var(--white-txt);
+
   --font-sans: "Segoe UI", "Trebuchet MS", sans-serif;
   --font-mono: "Cascadia Mono", monospace;
+}
+
+@utility text-shadow-sm {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+@utility text-shadow-lg {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
 
 html {
@@ -56,7 +67,7 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(89, 151, 95, 0.16), transparent 28%),
+    radial-gradient(circle at top left, rgba(89, 151, 95, 0.16), transparent 30%),
     radial-gradient(circle at top right, rgba(115, 99, 81, 0.12), transparent 26%), /* RGB atualizado para a cor 'neutral' */
     linear-gradient(180deg, var(--background) 0%, #F6F2EB 100%);
   color: var(--foreground);

@@ -1,4 +1,4 @@
-import { Mail, Heart, MapPin, Phone } from "lucide-react";
+import { Heart, Mail, MapPin, Phone } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,7 +16,7 @@ export function Footer() {
           <p className="max-w-xl text-foreground/70 text-xs leading-6">
             Casa de caridade dedicada ao atendimento fraterno e aos tratamentos espirituais. 
             Auxiliando no reequilíbrio da alma com fé, amor e esperança. <br />
-            © {currentYear} Luz da Esperança. Desenvolvido por Borabil Software House. Todos os direitos reservados.
+            © {currentYear} Luz da Esperança. Todos os direitos reservados.
           </p>
         </div>
 

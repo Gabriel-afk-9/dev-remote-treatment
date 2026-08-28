@@ -52,19 +52,19 @@ export default function TratamentoCirurgia({ dadosIniciais }: TratamentoCirurgia
         <div className="flex flex-wrap items-center gap-1.5 bg-background p-1.5 border border-neutral/15 rounded-2xl w-full lg:w-auto">
           <button 
             onClick={() => setFilter("TODOS")}
-            className={`flex-1 lg:flex-none px-4 py-2 rounded-xl text-sm font-semibold transition-all ${filter === "TODOS" ? "bg-brand text-background shadow-md" : "text-neutral/70 hover:text-foreground hover:bg-neutral/5"}`}
+            className={`flex-1 lg:flex-none px-4 py-2 rounded-xl text-sm font-semibold transition-all ${filter === "TODOS" ? "bg-brand text-background shadow-md" : "text-neutral/70 hover:text-brand hover:bg-brand/5"}`}
           >
             Todos
           </button>
           <button 
             onClick={() => setFilter("TRATAMENTO_COM_CIRURGIA")}
-            className={`flex-1 lg:flex-none px-4 py-2 rounded-xl text-sm font-semibold transition-all ${filter === "TRATAMENTO_COM_CIRURGIA" ? "bg-brand text-background shadow-md" : "text-neutral/70 hover:text-foreground hover:bg-neutral/5"}`}
+            className={`flex-1 lg:flex-none px-4 py-2 rounded-xl text-sm font-semibold transition-all ${filter === "TRATAMENTO_COM_CIRURGIA" ? "bg-brand text-background shadow-md" : "text-neutral/70 hover:text-brand hover:bg-brand/5"}`}
           >
             Com Cirurgia
           </button>
           <button 
             onClick={() => setFilter("TRATAMENTO_SEM_CIRURGIA")}
-            className={`flex-1 lg:flex-none px-4 py-2 rounded-xl text-sm font-semibold transition-all ${filter === "TRATAMENTO_SEM_CIRURGIA" ? "bg-brand text-background shadow-md" : "text-neutral/70 hover:text-foreground hover:bg-neutral/5"}`}
+            className={`flex-1 lg:flex-none px-4 py-2 rounded-xl text-sm font-semibold transition-all ${filter === "TRATAMENTO_SEM_CIRURGIA" ? "bg-brand text-background shadow-md" : "text-neutral/70 hover:text-brand hover:bg-brand/5"}`}
           >
             Sem Cirurgia
           </button>

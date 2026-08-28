@@ -236,7 +236,7 @@ export function RegistrationSection() {
               )}
 
               <div className="flex flex-wrap justify-between items-center gap-3 pt-6 border-neutral/10 border-t">
-                <button type="button" className="gap-2 bg-background hover:bg-neutral border-neutral/20 hover:border-neutral text-foreground hover:text-background btn" onClick={() => setStep((current) => Math.max(0, current - 1))} hidden={step === 0}>
+                <button type="button" className="gap-2 bg-background hover:bg-brand border-brand/20 hover:border-brand text-foreground hover:text-background btn" onClick={() => setStep((current) => Math.max(0, current - 1))} hidden={step === 0}>
                   <ArrowLeft size={16} />
                   Voltar
                 </button>

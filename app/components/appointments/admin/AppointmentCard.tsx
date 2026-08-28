@@ -51,7 +51,7 @@ export function AppointmentCard({ data, onClick }: AppointmentCardProps) {
       </div>
 
       <div className="flex justify-between items-center mt-auto pt-4 pl-2 border-neutral/10 border-t">
-        <span className="font-medium text-neutral group-hover:text-foreground text-xs transition-colors">Ver detalhes</span>
+        <span className="font-medium text-neutral group-hover:text-brand text-xs transition-colors">Ver detalhes</span>
         <div className="bg-background group-hover:bg-brand/10 p-1.5 rounded-full transition-colors">
           <ArrowRight size={16} className="text-neutral/40 group-hover:text-brand transition-all group-hover:translate-x-0.5" />
         </div>

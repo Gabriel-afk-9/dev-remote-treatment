@@ -111,7 +111,7 @@ export default function EnviarAlerta({ agendamentosRecentes }: EnviarAlertaProps
               <button
                 type="button"
                 onClick={handleSelectAll}
-                className="gap-2 hover:bg-neutral/10 font-medium text-foreground/70 hover:text-foreground btn btn-sm btn-ghost"
+                className="gap-2 hover:bg-brand/10 font-medium text-foreground/70 hover:text-brand btn btn-sm btn-ghost"
               >
                 {selectedProtocolos.length === filteredAgendamentos.length && filteredAgendamentos.length > 0
                   ? <CheckSquare size={16} className="text-brand" />
@@ -125,7 +125,7 @@ export default function EnviarAlerta({ agendamentosRecentes }: EnviarAlertaProps
                 <button
                   type="button"
                   onClick={handleSelectWithSurgery}
-                  className="gap-1.5 hover:bg-neutral/10 font-medium text-foreground/70 hover:text-foreground btn btn-sm btn-ghost"
+                  className="gap-1.5 hover:bg-brand/10 font-medium text-foreground/70 hover:text-brand btn btn-sm btn-ghost"
                   title="Marcar todos com cirurgia"
                 >
                   <HeartPulse size={14} className="text-brand" />
@@ -134,7 +134,7 @@ export default function EnviarAlerta({ agendamentosRecentes }: EnviarAlertaProps
                 <button
                   type="button"
                   onClick={handleSelectWithoutSurgery}
-                  className="gap-1.5 hover:bg-neutral/10 font-medium text-foreground/70 hover:text-foreground btn btn-sm btn-ghost"
+                  className="gap-1.5 hover:bg-brand/10 font-medium text-foreground/70 hover:text-brand btn btn-sm btn-ghost"
                   title="Marcar todos sem cirurgia"
                 >
                   <User size={14} className="text-neutral/50" />

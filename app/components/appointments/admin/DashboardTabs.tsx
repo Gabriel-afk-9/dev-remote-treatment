@@ -13,7 +13,7 @@ export function DashboardTabs({ agendamentos }: { agendamentos: Agendamento[] })
   // Classe base compartilhada para abas
   const tabClass = `tab tab-lifted font-medium text-lg transition-all duration-300 `;
   const activeTabClass = `tab-active !text-brand !border-neutral/20 !bg-card font-bold`;
-  const inactiveTabClass = `text-neutral/70 hover:text-foreground hover:bg-neutral/5 border-transparent`;
+  const inactiveTabClass = `text-neutral/70 hover:text-brand hover:bg-brand/5 border-transparent`;
 
   return (
     <div role="tablist" className="w-full tabs tabs-lifted tabs-lg">
