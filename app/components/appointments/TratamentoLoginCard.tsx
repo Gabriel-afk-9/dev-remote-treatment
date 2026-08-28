@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { CalendarDays, Hash, LockKeyhole, AlertCircle } from "lucide-react";
-import { SubmitButton } from "@/src/shared/presentation/components/SubmitButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import { validarAcessoPaciente } from "@/src/features/appointments/presentation/actions/agendamentos.actions";
 
 export function TratamentoLoginCard() {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Send, Users, Search, CheckSquare, Square, Inbox, Type, Filter, HeartPulse, User } from "lucide-react";
-import { SubmitButton } from "@/src/shared/presentation/components/SubmitButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import { enviarAlertaGeral } from "@/src/features/appointments/presentation/actions/alertas.actions";
 import { Agendamento } from "@/types/database";
 

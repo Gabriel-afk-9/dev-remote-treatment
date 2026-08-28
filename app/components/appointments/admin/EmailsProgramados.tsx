@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Mail, Save, Info } from "lucide-react";
-import { SubmitButton } from "@/src/shared/presentation/components/SubmitButton"; 
+import { SubmitButton } from "@/components/shared/SubmitButton"; 
 // Importe a Server Action
 import { salvarTemplatesRotina } from "@/src/features/emails/presentation/actions/templates.actions";
 

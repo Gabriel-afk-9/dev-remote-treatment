@@ -5,7 +5,7 @@ import {
   ArrowLeft, ArrowRight, CalendarDays, CheckCheck, ClipboardList,
   Mail, MapPinned, Megaphone, MessageCircle, Phone, ShieldCheck, UserRound,
 } from "lucide-react";
-import { SubmitButton } from "@/src/shared/presentation/components/SubmitButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import { salvarAgendamento, FormInscricao } from "@/src/features/appointments/presentation/actions/inscricao.actions";
 
 const stepLabels = ["Paciente", "Agendamento", "Revisão"];

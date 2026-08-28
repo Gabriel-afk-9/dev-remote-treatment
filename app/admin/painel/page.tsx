@@ -1,8 +1,8 @@
 // app/admin/painel/page.tsx
-import { HeaderAdmin } from "@/src/features/appointments/presentation/components/admin/HeaderAdmin";
-import { Footer } from "@/src/shared/presentation/components/Footer";
+import { HeaderAdmin } from "@/components/appointments/admin/HeaderAdmin";
+import { Footer } from "@/components/shared/Footer";
 import { buscarAgendamentos } from "@/src/features/appointments/presentation/actions/agendamentos.actions";
-import { DashboardTabs } from "@/src/features/appointments/presentation/components/admin/DashboardTabs"; // Vamos criar este abaixo
+import { DashboardTabs } from "@/components/appointments/admin/DashboardTabs"; // Vamos criar este abaixo
 
 export default async function AdminDashboardPage() {
   // A busca assíncrona acontece aqui (Server Side)

@@ -6,7 +6,7 @@ import {
 import { format, addMonths } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Agendamento, OpcaoWhatsApp, StatusAgendamento } from "@/types/database";
-import { SubmitButton } from "@/src/shared/presentation/components/SubmitButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 // Importações das Server Actions reais:
 import { atualizarAgendamento, excluirAgendamento } from "@/src/features/appointments/presentation/actions/agendamentos.actions";
 import { calcularUltimaSextaDoMes } from "@/src/features/appointments/domain/services/SchedulingService";

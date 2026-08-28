@@ -2,8 +2,8 @@
 
 import { useActionState } from "react";
 import { Lock, User, LogIn, AlertCircle } from "lucide-react";
-import { Footer } from "@/src/shared/presentation/components/Footer";
-import { SubmitButton } from "@/src/shared/presentation/components/SubmitButton";
+import { Footer } from "@/components/shared/Footer";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import { loginAction } from "@/src/features/auth/presentation/actions/auth.actions";
 
 export default function LoginPage() {
