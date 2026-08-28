@@ -6,7 +6,6 @@ export function HeroSection() {
       className="flex items-start bg-linear-to-b from-brand to-background pt-8 min-h-screen hero"
       // style={{ backgroundImage: "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)" }}
     >
-      {/* <div className="hero-overlay"></div> */}
       <div className="lg:items-center gap-8 grid lg:grid-cols-[1.3fr_0.9fr] mx-auto w-full max-w-7xl hero-content">
         <div className="space-y-6">
           <span className="gap-2 bg-transparent border-background/40 text-background badge">
@@ -23,7 +22,7 @@ export function HeroSection() {
           <div className="flex flex-wrap gap-3">
             <a href="#inscricao" className="gap-2 bg-brand hover:bg-brand-hover border-brand hover:border-brand-hover text-background btn">
               Fazer inscrição
-              <ArrowRight size={16} />
+              <ArrowRight size={16} /> 
             </a>
             <a href="#faq" className="gap-2 bg-background hover:bg-neutral border-neutral/25 hover:border-neutral text-foreground hover:text-background btn">
               <CircleHelp size={16} />
