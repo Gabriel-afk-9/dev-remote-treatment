@@ -1,7 +1,7 @@
-import { NextResponse, type NextRequest } from 'next/server';
-import { updateSession } from '@/src/shared/infrastructure/database/supabase/middleware';
 import { getSupabaseEnv } from '@/src/shared/infrastructure/config/env';
+import { updateSession } from '@/src/shared/infrastructure/database/supabase/middleware';
 import { createServerClient } from '@supabase/ssr';
+import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const response = await updateSession(request);
