@@ -6,7 +6,15 @@ import {
   Mail, MapPinned, Megaphone, MessageCircle, Phone, ShieldCheck, UserRound,
 } from "lucide-react";
 import { SubmitButton } from "@/components/shared/SubmitButton";
+import { SearchableSelect } from "@/components/shared/SearchableSelect";
 import { salvarAgendamento, FormInscricao } from "@/src/features/appointments/presentation/actions/inscricao.actions";
+import {
+  countries,
+  getStates,
+  hasStates,
+  codeByName,
+} from "@/src/shared/infrastructure/data/locations";
+import { formatDateMask, toISODate, isNascimentoValido } from "@/src/shared/utils/mask";
 
 const stepLabels = ["Paciente", "Agendamento", "Revisão"];
 
@@ -31,6 +39,21 @@ export function RegistrationSection() {
   const [formData, setFormData] = useState<FormInscricao>(initialFormData);
   const [protocoloGerado, setProtocoloGerado] = useState<string | null>(null);
   const [erro, setErro] = useState<string | null>(null);
+  const [nascimentoDisplay, setNascimentoDisplay] = useState("");
+
+  const handlePaisSelect = (pais: string) => {
+    setFormData((current) => ({ ...current, pais, estado: "" }));
+  };
+
+  const handleEstadoSelect = (estado: string) => {
+    setFormData((current) => ({ ...current, estado }));
+  };
+
+  const handleNascimentoChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const masked = formatDateMask(event.target.value);
+    setNascimentoDisplay(masked);
+    setFormData((current) => ({ ...current, dataNascimento: toISODate(masked) }));
+  };
 
   const [isPending, startTransition] = useTransition();
 
@@ -46,6 +69,20 @@ export function RegistrationSection() {
 
   const handleAction = () => {
     setErro(null);
+
+    if (!formData.pais) {
+      setErro("Selecione o país.");
+      return;
+    }
+    if (hasStates(codeByName[formData.pais]) && !formData.estado) {
+      setErro("Selecione o estado/província/região.");
+      return;
+    }
+    if (!isNascimentoValido(formData.dataNascimento)) {
+      setErro("Informe uma data de nascimento válida (até hoje).");
+      return;
+    }
+
     startTransition(async () => {
       const resultado = await salvarAgendamento(formData);
 
@@ -77,6 +114,7 @@ export function RegistrationSection() {
               setProtocoloGerado(null);
               setStep(0);
               setFormData(initialFormData);
+              setNascimentoDisplay("");
             }}
             className="w-full text-foreground hover:text-background btn btn-ghost"
           >
@@ -135,19 +173,56 @@ export function RegistrationSection() {
                   </label>
                   <label className="flex flex-col form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">Data de nascimento</span>
-                    <input required type="date" className="bg-background border-neutral/20 focus:border-brand text-foreground input input-bordered" value={formData.dataNascimento} onChange={updateField("dataNascimento")} />
+                    <input
+                      required
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="DD/MM/AAAA"
+                      maxLength={10}
+                      className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
+                      value={nascimentoDisplay}
+                      onChange={handleNascimentoChange}
+                    />
                   </label>
-                  <label className="flex flex-col form-control">
+                  <label className="flex flex-col min-w-0 form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">País</span>
-                    <input required className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered" placeholder="Brasil" value={formData.pais} onChange={updateField("pais")} />
+                    <SearchableSelect
+                      options={countries}
+                      value={formData.pais}
+                      onChange={handlePaisSelect}
+                      placeholder="Selecione o país"
+                      searchPlaceholder="Digite o nome do país..."
+                    />
                   </label>
-                  <label className="flex flex-col form-control">
-                    <span className="mb-2 font-medium text-foreground text-sm label-text">Estado</span>
-                    <input required className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered" placeholder="CE" value={formData.estado} onChange={updateField("estado")} />
+                  <label className="flex flex-col min-w-0 form-control">
+                    <span className="mb-2 font-medium text-foreground text-sm label-text">Estado / Província / Região</span>
+                    {hasStates(codeByName[formData.pais]) ? (
+                      <SearchableSelect
+                        options={getStates(codeByName[formData.pais])!}
+                        value={formData.estado}
+                        onChange={handleEstadoSelect}
+                        placeholder="Selecione o estado"
+                        searchPlaceholder="Digite o nome do estado..."
+                      />
+                    ) : (
+                      <input
+                        className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
+                        placeholder="Ex.: Île-de-France"
+                        value={formData.estado}
+                        onChange={updateField("estado")}
+                      />
+                    )}
                   </label>
                   <label className="flex flex-col form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">Cidade</span>
-                    <input required className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered" placeholder="Fortaleza" value={formData.cidade} onChange={updateField("cidade")} />
+                    <input
+                      required
+                      autoComplete="address-level2"
+                      className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
+                      placeholder="Fortaleza"
+                      value={formData.cidade}
+                      onChange={updateField("cidade")}
+                    />
                   </label>
                   <label className="flex flex-col form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">Endereço</span>

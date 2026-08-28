@@ -1,13 +1,23 @@
 "use client"; // Necessário para usar hooks
 
-import { useActionState } from "react";
+import { useActionState, useState, type ChangeEvent } from "react";
 import { CalendarDays, Hash, LockKeyhole, AlertCircle } from "lucide-react";
 import { SubmitButton } from "@/components/shared/SubmitButton";
 import { validarAcessoPaciente } from "@/src/features/appointments/presentation/actions/agendamentos.actions";
+import { formatDateMask, toISODate } from "@/src/shared/utils/mask";
 
 export function TratamentoLoginCard() {
   // Inicializamos o hook passando a Action e o estado inicial (nulo)
   const [state, formAction] = useActionState(validarAcessoPaciente, null);
+
+  const [nascimentoDisplay, setNascimentoDisplay] = useState("");
+  const [nascimentoISO, setNascimentoISO] = useState("");
+
+  const handleNascimentoChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const masked = formatDateMask(event.target.value);
+    setNascimentoDisplay(masked);
+    setNascimentoISO(toISODate(masked));
+  };
 
   return (
     <section className="flex flex-1 justify-center items-center px-4 sm:px-6 lg:px-8 py-8">
@@ -50,11 +60,16 @@ export function TratamentoLoginCard() {
                 Data de nascimento
               </span>
               <input
-                type="date"
-                name="dataNascimento"
                 required
-                className="bg-background border-neutral/20 focus:border-brand w-full text-foreground input input-bordered"
+                type="text"
+                inputMode="numeric"
+                placeholder="DD/MM/AAAA"
+                maxLength={10}
+                className="bg-background border-neutral/20 focus:border-brand w-full text-foreground placeholder:text-foreground/50 input input-bordered"
+                value={nascimentoDisplay}
+                onChange={handleNascimentoChange}
               />
+              <input type="hidden" name="dataNascimento" value={nascimentoISO} />
             </label>
             <SubmitButton text="Acessar" icon={<LockKeyhole size={16} />} />
           </form>
