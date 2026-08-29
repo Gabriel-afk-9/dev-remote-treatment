@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Protocolo } from '../features/appointments/domain/value-objects/Protocolo';
+import { Protocolo } from '@/src/features/appointments/domain/value-objects/Protocolo';
 import { DomainError } from '@/src/shared/domain/errors';
 
 describe('Protocolo', () => {

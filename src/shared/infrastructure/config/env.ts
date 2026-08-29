@@ -22,6 +22,7 @@ export type CronEnv = z.infer<typeof cronSchema>;
 let supabaseCache: SupabaseEnv | null = null;
 let emailCache: EmailEnv | null = null;
 let cronCache: CronEnv | null = null;
+let emailWarningShown = false;
 
 function parse<T extends z.ZodTypeAny>(schema: T, cache: T['_output'] | null, label: string): T['_output'] {
   if (cache) {
@@ -37,13 +38,30 @@ function parse<T extends z.ZodTypeAny>(schema: T, cache: T['_output'] | null, la
   return parsed.data;
 }
 
+function parseOptional<T extends z.ZodTypeAny>(schema: T, cache: T['_output'] | null, label: string): T['_output'] | null {
+  if (cache) {
+    return cache;
+  }
+  const parsed = schema.safeParse(process.env);
+  if (!parsed.success) {
+    if (!emailWarningShown) {
+      emailWarningShown = true;
+      console.warn(
+        `[env] Configuração de e-mail (${label}) ausente ou inválida — e-mails não serão enviados até serem configurados.`,
+      );
+    }
+    return null;
+  }
+  return parsed.data;
+}
+
 export function getSupabaseEnv(): SupabaseEnv {
   supabaseCache = parse(supabaseSchema, supabaseCache, 'supabase');
   return supabaseCache;
 }
 
-export function getEmailEnv(): EmailEnv {
-  emailCache = parse(emailSchema, emailCache, 'email');
+export function getEmailEnv(): EmailEnv | null {
+  emailCache = parseOptional(emailSchema, emailCache, 'email');
   return emailCache;
 }
 

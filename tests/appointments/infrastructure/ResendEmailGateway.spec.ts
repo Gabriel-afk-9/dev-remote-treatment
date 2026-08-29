@@ -37,3 +37,33 @@ describe('ResendEmailGateway', () => {
     expect(result.ok).toBe(false);
   });
 });
+
+describe('ResendEmailGateway sem configuração de ambiente', () => {
+  it('não lança no construtor e retorna falha no send', async () => {
+    const prevKey = process.env.RESEND_API_KEY;
+    const prevFrom = process.env.RESEND_FROM;
+    delete process.env.RESEND_API_KEY;
+    delete process.env.RESEND_FROM;
+
+    vi.resetModules();
+    const { ResendEmailGateway: FreshGateway } = await import(
+      '@/src/features/emails/infrastructure/email/ResendEmailGateway'
+    );
+
+    let gateway: InstanceType<typeof FreshGateway>;
+    expect(() => {
+      gateway = new FreshGateway();
+    }).not.toThrow();
+
+    const result = await gateway!.send({
+      para: 'a@b.com',
+      assunto: 'Oi',
+      corpoHtml: '<p>oi</p>',
+    });
+    expect(result.ok).toBe(false);
+
+    process.env.RESEND_API_KEY = prevKey;
+    process.env.RESEND_FROM = prevFrom;
+    vi.resetModules();
+  });
+});

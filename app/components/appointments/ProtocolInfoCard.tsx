@@ -1,5 +1,5 @@
 import { Agendamento } from "@/types/database";
-import { formatDate } from "date-fns";
+import { formatDateSafe } from "@/src/shared/utils/date";
 import { User, Phone, Mail, ClipboardCheck, Info, HeartPulse, MessageCircle } from "lucide-react";
 
 interface ProtocolInfoCardProps {
@@ -40,7 +40,7 @@ export function ProtocolInfoCard({ agendamento }: { agendamento: Agendamento }) 
               </div>
               <div className="flex justify-between py-1 border-neutral/5 border-b">
                 <span className="text-foreground/60">Data de Nascimento:</span>
-                <span className="font-medium text-foreground">{formatDate(new Date(`${agendamento.pacientes.data_nascimento}T12:00:00`), 'dd/MM/yyyy')}</span>
+                <span className="font-medium text-foreground">{formatDateSafe(agendamento.pacientes?.data_nascimento)}</span>
               </div>
               <div className="flex justify-between py-1 border-neutral/5 border-b">
                 <span className="text-foreground/60">Localização:</span>
@@ -97,7 +97,7 @@ export function ProtocolInfoCard({ agendamento }: { agendamento: Agendamento }) 
               </div>
               <div className="flex justify-between py-1 border-neutral/5 border-b">
                 <span className="text-foreground/60">Data do Cadastro:</span>
-                <span className="font-medium text-foreground">{formatDate(new Date(agendamento.data_cadastro), 'dd/MM/yyyy')}</span>
+                <span className="font-medium text-foreground">{formatDateSafe(agendamento.data_cadastro)}</span>
               </div>
               <div className="flex justify-between py-1 border-neutral/5 border-b">
                 <span className="text-foreground/60">Orientação Intercessória:</span>
@@ -108,7 +108,7 @@ export function ProtocolInfoCard({ agendamento }: { agendamento: Agendamento }) 
                   <span className="flex items-center gap-1 font-semibold text-brand">
                     <HeartPulse size={16} /> Data da Cirurgia:
                   </span>
-                  <span className="font-bold text-brand">{formatDate(new Date(`${agendamento.data_cirurgia}T12:00:00`), 'dd/MM/yyyy')}</span>
+                  <span className="font-bold text-brand">{formatDateSafe(agendamento.data_cirurgia)}</span>
                 </div>
               )}
             </div>

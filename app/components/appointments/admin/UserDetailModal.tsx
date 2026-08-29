@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { format, addMonths } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { formatDateSafe } from "@/src/shared/utils/date";
 import { Agendamento, OpcaoWhatsApp, StatusAgendamento } from "@/types/database";
 import { SubmitButton } from "@/components/shared/SubmitButton";
 // Importações das Server Actions reais:
@@ -123,7 +124,7 @@ export function UserDetailModal({ agendamento, onClose, onUpdate, onDelete }: Us
                 </label>
                 <label className="form-control">
                   <span className="flex items-center gap-1.5 mb-2 font-medium text-foreground label-text">Data de Nascimento</span>
-                  <input type="text" className="bg-neutral/5 border-neutral/20 text-neutral input input-bordered" value={format(new Date(`${agendamento.pacientes.data_nascimento}T12:00:00`), "dd/MM/yyyy")} readOnly />
+                  <input type="text" className="bg-neutral/5 border-neutral/20 text-neutral input input-bordered" value={formatDateSafe(agendamento.pacientes?.data_nascimento)} readOnly />
                 </label>
                 <label className="form-control">
                   <span className="flex items-center gap-1.5 mb-2 font-medium text-foreground label-text">Endereço Completo</span>

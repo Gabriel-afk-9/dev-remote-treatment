@@ -93,6 +93,7 @@ export class CreateAppointmentUseCase {
       para: input.emailNotificacao,
       assunto: email.assunto,
       corpoHtml: email.corpoHtml,
+      replyTo: email.replyTo,
     });
 
     return { protocolo: protocolo.valor, emailEnviado: emailResult.ok };

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calcularUltimaSextaDoMes, validarAntecedencia15Dias } from '../features/appointments/domain/services/SchedulingService';
+import { calcularUltimaSextaDoMes, validarAntecedencia15Dias } from '@/src/features/appointments/domain/services/SchedulingService';
 
 describe('SchedulingService', () => {
   it('calcularUltimaSextaDoMes retorna a última sexta de agosto/2026', () => {

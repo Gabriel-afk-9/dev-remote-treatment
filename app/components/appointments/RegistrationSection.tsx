@@ -1,39 +1,43 @@
 "use client";
 
-import { useState, type ChangeEvent, useTransition } from "react";
-import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CalendarDays,
-  CheckCheck,
-  ClipboardList,
-  Mail,
-  MapPinned,
-  Megaphone,
-  MessageCircle,
-  Phone,
-  ShieldCheck,
-  UserRound,
-} from "lucide-react";
-import { SubmitButton } from "@/components/shared/SubmitButton";
+import { PhoneField } from "@/components/shared/PhoneField";
 import { SearchableSelect } from "@/components/shared/SearchableSelect";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import {
-  salvarAgendamento,
-  FormInscricao,
+    FormInscricao,
+    salvarAgendamento,
 } from "@/src/features/appointments/presentation/actions/inscricao.actions";
 import {
-  countries,
-  getStates,
-  hasStates,
-  codeByName,
+  validateStep,
+  type FormErrors,
+} from "@/src/features/appointments/presentation/utils/formValidation";
+import { formatPhoneDisplay } from "@/src/shared/utils/phone";
+import {
+    codeByName,
+    countries,
+    getStates,
+    hasStates,
 } from "@/src/shared/infrastructure/data/locations";
 import {
-  formatDateMask,
-  toISODate,
-  isNascimentoValido,
+    formatDateMask,
+    isNascimentoValido,
+    toISODate,
 } from "@/src/shared/utils/mask";
+import {
+    ArrowLeft,
+    ArrowRight,
+    CalendarDays,
+    CheckCheck,
+    ClipboardList,
+    Mail,
+    MapPinned,
+    Megaphone,
+    MessageCircle,
+    Phone,
+    ShieldCheck,
+    UserRound,
+} from "lucide-react";
+import { useState, useTransition, type ChangeEvent } from "react";
 
 const stepLabels = ["Paciente", "Agendamento", "Revisão"];
 
@@ -59,13 +63,25 @@ export function RegistrationSection() {
   const [protocoloGerado, setProtocoloGerado] = useState<string | null>(null);
   const [erro, setErro] = useState<string | null>(null);
   const [nascimentoDisplay, setNascimentoDisplay] = useState("");
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const clearError = (field: keyof FormInscricao) =>
+    setErrors((current) => {
+      if (!current[field]) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
 
   const handlePaisSelect = (pais: string) => {
     setFormData((current) => ({ ...current, pais, estado: "" }));
+    clearError("pais");
+    clearError("estado");
   };
 
   const handleEstadoSelect = (estado: string) => {
     setFormData((current) => ({ ...current, estado }));
+    clearError("estado");
   };
 
   const handleNascimentoChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +91,7 @@ export function RegistrationSection() {
       ...current,
       dataNascimento: toISODate(masked),
     }));
+    clearError("dataNascimento");
   };
 
   const [isPending, startTransition] = useTransition();
@@ -91,7 +108,18 @@ export function RegistrationSection() {
         ...current,
         [field]: target.type === "checkbox" ? target.checked : target.value,
       }));
+      clearError(field);
     };
+
+  const goNext = () => {
+    const stepErrors = validateStep(step, formData);
+    if (Object.keys(stepErrors).length > 0) {
+      setErrors(stepErrors);
+      return;
+    }
+    setErrors({});
+    setStep((current) => Math.min(2, current + 1));
+  };
 
   const handleAction = () => {
     setErro(null);
@@ -228,11 +256,24 @@ export function RegistrationSection() {
                     </span>
                     <input
                       required
+                      aria-invalid={!!errors.nomeCompleto}
+                      aria-describedby={
+                        errors.nomeCompleto ? "erro-nomeCompleto" : undefined
+                      }
                       className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
                       placeholder="Ex.: Maria Oliveira"
                       value={formData.nomeCompleto}
                       onChange={updateField("nomeCompleto")}
                     />
+                    {errors.nomeCompleto && (
+                      <p
+                        id="erro-nomeCompleto"
+                        role="alert"
+                        className="mt-1 text-error text-sm"
+                      >
+                        {errors.nomeCompleto}
+                      </p>
+                    )}
                   </label>
                   <label className="flex flex-col form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">
@@ -240,6 +281,12 @@ export function RegistrationSection() {
                     </span>
                     <input
                       required
+                      aria-invalid={!!errors.dataNascimento}
+                      aria-describedby={
+                        errors.dataNascimento
+                          ? "erro-dataNascimento"
+                          : undefined
+                      }
                       type="text"
                       inputMode="numeric"
                       placeholder="DD/MM/AAAA"
@@ -248,6 +295,15 @@ export function RegistrationSection() {
                       value={nascimentoDisplay}
                       onChange={handleNascimentoChange}
                     />
+                    {errors.dataNascimento && (
+                      <p
+                        id="erro-dataNascimento"
+                        role="alert"
+                        className="mt-1 text-error text-sm"
+                      >
+                        {errors.dataNascimento}
+                      </p>
+                    )}
                   </label>
                   <label className="flex flex-col min-w-0 form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">
@@ -260,10 +316,19 @@ export function RegistrationSection() {
                       placeholder="Selecione o país"
                       searchPlaceholder="Digite o nome do país..."
                     />
+                    {errors.pais && (
+                      <p
+                        id="erro-pais"
+                        role="alert"
+                        className="mt-1 text-error text-sm"
+                      >
+                        {errors.pais}
+                      </p>
+                    )}
                   </label>
                   <label className="flex flex-col min-w-0 form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">
-                      Estado / Província / Região
+                      Estado
                     </span>
                     {hasStates(codeByName[formData.pais]) ? (
                       <SearchableSelect
@@ -275,11 +340,24 @@ export function RegistrationSection() {
                       />
                     ) : (
                       <input
+                        aria-invalid={!!errors.estado}
+                        aria-describedby={
+                          errors.estado ? "erro-estado" : undefined
+                        }
                         className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
-                        placeholder="Ex.: Île-de-France"
+                        placeholder="Ex.: Piauí"
                         value={formData.estado}
                         onChange={updateField("estado")}
                       />
+                    )}
+                    {errors.estado && (
+                      <p
+                        id="erro-estado"
+                        role="alert"
+                        className="mt-1 text-error text-sm"
+                      >
+                        {errors.estado}
+                      </p>
                     )}
                   </label>
                   <label className="flex flex-col form-control">
@@ -288,12 +366,25 @@ export function RegistrationSection() {
                     </span>
                     <input
                       required
+                      aria-invalid={!!errors.cidade}
+                      aria-describedby={
+                        errors.cidade ? "erro-cidade" : undefined
+                      }
                       autoComplete="address-level2"
                       className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
-                      placeholder="Fortaleza"
+                      placeholder="Parnaíba"
                       value={formData.cidade}
                       onChange={updateField("cidade")}
                     />
+                    {errors.cidade && (
+                      <p
+                        id="erro-cidade"
+                        role="alert"
+                        className="mt-1 text-error text-sm"
+                      >
+                        {errors.cidade}
+                      </p>
+                    )}
                   </label>
                   <label className="flex flex-col form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">
@@ -301,11 +392,24 @@ export function RegistrationSection() {
                     </span>
                     <input
                       required
+                      aria-invalid={!!errors.endereco}
+                      aria-describedby={
+                        errors.endereco ? "erro-endereco" : undefined
+                      }
                       className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
                       placeholder="Rua, número, bairro e complemento"
                       value={formData.endereco}
                       onChange={updateField("endereco")}
                     />
+                    {errors.endereco && (
+                      <p
+                        id="erro-endereco"
+                        role="alert"
+                        className="mt-1 text-error text-sm"
+                      >
+                        {errors.endereco}
+                      </p>
+                    )}
                   </label>
                 </div>
               )}
@@ -319,36 +423,49 @@ export function RegistrationSection() {
                     </span>
                     <input
                       required
+                      aria-invalid={!!errors.emailNotificacao}
+                      aria-describedby={
+                        errors.emailNotificacao
+                          ? "erro-emailNotificacao"
+                          : undefined
+                      }
                       type="email"
                       className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
                       placeholder="contato@exemplo.com"
                       value={formData.emailNotificacao}
                       onChange={updateField("emailNotificacao")}
                     />
+                    {errors.emailNotificacao && (
+                      <p
+                        id="erro-emailNotificacao"
+                        role="alert"
+                        className="mt-1 text-error text-sm"
+                      >
+                        {errors.emailNotificacao}
+                      </p>
+                    )}
                   </label>
                   <label className="flex flex-col form-control">
                     <span className="flex items-center gap-2 mb-2 font-medium text-foreground text-sm label-text">
                       <Phone size={14} />
                       Celular
                     </span>
-                    <PhoneInput
-                      international
-                      defaultCountry="BR"
-                      placeholder="(85) 98888-8888"
-                      value={formData.whatsappAuxiliar}
-                      onChange={(value: string | undefined) => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          whatsappAuxiliar: value ?? "",
-                        }));
-                      }}
-                      disabled={formData.tipoWhatsApp !== "OUTRO_NUMERO"}
-                      className="phone-input-custom"
-                      numberInputProps={{
-                        className:
-                          "bg-background disabled:opacity-50 border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered",
+                    <PhoneField
+                      value={formData.celular}
+                      onChange={(value) => {
+                        setFormData((prev) => ({ ...prev, celular: value }));
+                        clearError("celular");
                       }}
                     />
+                    {errors.celular && (
+                      <p
+                        id="erro-celular"
+                        role="alert"
+                        className="mt-1 text-error text-sm"
+                      >
+                        {errors.celular}
+                      </p>
+                    )}
                   </label>
                   <label className="flex flex-col form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">
@@ -357,7 +474,10 @@ export function RegistrationSection() {
                     <select
                       className="bg-background border-neutral/20 focus:border-brand text-foreground select-bordered select"
                       value={formData.tipoWhatsApp}
-                      onChange={updateField("tipoWhatsApp")}
+                      onChange={(event) => {
+                        updateField("tipoWhatsApp")(event);
+                        clearError("whatsappAuxiliar");
+                      }}
                     >
                       <option value="E_WHATSAPP">Sim</option>
                       <option value="NAO_TEM">Não Tenho</option>
@@ -370,14 +490,26 @@ export function RegistrationSection() {
                     <span className="flex items-center gap-2 mb-2 font-medium text-foreground text-sm label-text">
                       <MessageCircle size={14} /> WhatsApp Auxiliar
                     </span>
-                    <input
-                      type="tel"
-                      className="bg-background disabled:opacity-50 border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
-                      placeholder="(85) 98888-8888"
-                      value={formData.whatsappAuxiliar}
-                      onChange={updateField("whatsappAuxiliar")}
+                    <PhoneField
+                      value={formData.whatsappAuxiliar ?? ""}
+                      onChange={(value) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          whatsappAuxiliar: value,
+                        }));
+                        clearError("whatsappAuxiliar");
+                      }}
                       disabled={formData.tipoWhatsApp !== "OUTRO_NUMERO"}
                     />
+                    {errors.whatsappAuxiliar && (
+                      <p
+                        id="erro-whatsappAuxiliar"
+                        role="alert"
+                        className="mt-1 text-error text-sm"
+                      >
+                        {errors.whatsappAuxiliar}
+                      </p>
+                    )}
                   </label>
                   <label className="flex flex-col form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">
@@ -494,14 +626,17 @@ export function RegistrationSection() {
                       <div className="flex justify-between items-center gap-4">
                         <dt>Celular</dt>
                         <dd className="font-medium text-foreground text-right">
-                          {formData.celular || "(00) 00000-0000"}
+                          {formatPhoneDisplay(formData.celular) ||
+                            "(00) 00000-0000"}
                         </dd>
                       </div>
                       {formData.tipoWhatsApp === "OUTRO_NUMERO" && (
                         <div className="flex justify-between items-center gap-4">
                           <dt>Auxiliar</dt>
                           <dd className="font-medium text-foreground text-right">
-                            {formData.whatsappAuxiliar || "(00) 00000-0000"}
+                            {formatPhoneDisplay(
+                              formData.whatsappAuxiliar ?? "",
+                            ) || "(00) 00000-0000"}
                           </dd>
                         </div>
                       )}
@@ -526,9 +661,7 @@ export function RegistrationSection() {
                     <button
                       type="button"
                       className="gap-2 bg-brand hover:bg-brand-hover border-brand hover:border-brand-hover text-background btn"
-                      onClick={() =>
-                        setStep((current) => Math.min(2, current + 1))
-                      }
+                      onClick={goNext}
                     >
                       Próxima etapa
                       <ArrowRight size={16} />

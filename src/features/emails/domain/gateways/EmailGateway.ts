@@ -4,6 +4,7 @@ export interface SendEmailInput {
   para: string | string[];
   assunto: string;
   corpoHtml: string;
+  replyTo?: string;
 }
 
 export interface SendEmailOutput {

@@ -10,7 +10,7 @@ export interface ConfirmationEmailData {
 
 export function buildConfirmationEmail(
   data: ConfirmationEmailData,
-): { assunto: string; corpoHtml: string } {
+): { assunto: string; corpoHtml: string; replyTo: string } {
   const tipoLabel = data.tipo === 'TRATAMENTO_COM_CIRURGIA' ? 'Com Cirurgia' : 'Sem Cirurgia';
   const dataNascimentoFormatada = formatDate(new Date(`${data.dataNascimento}T12:00:00`), 'dd/MM/yyyy');
 
@@ -31,5 +31,6 @@ ${data.dataCirurgia ? `<p>Data Prevista para Cirurgia: <strong>${formatDate(data
   return {
     assunto: `LUZ DA ESPERANÇA | Agendamento Confirmado: Protocolo ${data.protocolo}`,
     corpoHtml,
+    replyTo: 'desenvolvimento@luzdaesperanca.org',
   };
 }

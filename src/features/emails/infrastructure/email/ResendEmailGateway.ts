@@ -6,19 +6,34 @@ import { getEmailEnv } from '@/src/shared/infrastructure/config/env';
 import type { EmailGateway, SendEmailInput, SendEmailOutput } from '../../domain/gateways/EmailGateway';
 
 export class ResendEmailGateway implements EmailGateway {
-  private readonly resend: Resend;
+  private readonly resend?: Resend;
+  private readonly from?: string;
+  private readonly configured: boolean;
 
   constructor() {
-    this.resend = new Resend(getEmailEnv().RESEND_API_KEY);
+    const env = getEmailEnv();
+    this.configured = env !== null;
+    if (env) {
+      this.resend = new Resend(env.RESEND_API_KEY);
+      this.from = env.RESEND_FROM;
+    }
   }
 
   async send(input: SendEmailInput): Promise<Result<SendEmailOutput>> {
+    if (!this.configured || !this.resend || !this.from) {
+      console.warn(
+        '[email] RESEND_API_KEY/RESEND_FROM ausentes — e-mail de notificação não enviado.',
+      );
+      return failure(new EmailError('E-mail não configurado'));
+    }
+
     const destinatarios = Array.isArray(input.para) ? input.para : [input.para];
 
     try {
       const { data, error } = await this.resend.emails.send({
-        from: getEmailEnv().RESEND_FROM,
+        from: this.from,
         to: destinatarios,
+        replyTo: input.replyTo,
         subject: input.assunto,
         html: input.corpoHtml,
       });
