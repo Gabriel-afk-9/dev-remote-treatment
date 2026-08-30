@@ -2,11 +2,7 @@ import { Agendamento } from "@/types/database";
 import { formatDateSafe } from "@/src/shared/utils/date";
 import { User, Phone, Mail, ClipboardCheck, Info, HeartPulse, MessageCircle } from "lucide-react";
 
-interface ProtocolInfoCardProps {
-  data: Agendamento;
-}
-
-export function ProtocolInfoCard({ agendamento }: { agendamento: Agendamento }) {
+export function ProtocolInfoCard({ agendamento }: { agendamento: Agendamento }) {  
   return (
     <div className="bg-background shadow-xl border border-neutral/15 w-full card">
       <div className="p-6 sm:p-8 card-body">

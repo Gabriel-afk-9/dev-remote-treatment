@@ -23,7 +23,6 @@ export default async function ProtocolPage({ params }: PageProps) {
     redirect("/tratamento"); 
   }
   
-  
   const agendamento = await buscarAgendamentoPorProtocolo(protocolo);
 
   if (!agendamento) {

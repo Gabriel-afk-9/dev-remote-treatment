@@ -6,7 +6,7 @@ import { rethrowAsRepositoryError } from '@/src/shared/infrastructure/database/s
 export class SupabasePatientRepository implements PatientRepository {
   constructor(private readonly client: SupabaseClient) {}
 
-  async save(patient: Patient): Promise<void> {
+  async save(patient: Patient): Promise<void> {    
     const { error } = await this.client.from('pacientes').insert({
       id: patient.id,
       nome_completo: patient.nomeCompleto,
@@ -29,10 +29,16 @@ export class SupabasePatientRepository implements PatientRepository {
       return null;
     }
 
+    const dataDeNascimento = data.data_nascimento;
+
+    const [year, month, day] = dataDeNascimento.split("-").map(Number);
+
+    const date = new Date(year, month - 1, day);
+
     return Patient.reconstituir({
       id: data.id,
       nomeCompleto: data.nome_completo,
-      dataNascimento: new Date(data.data_nascimento),
+      dataNascimento: date,
       pais: data.pais,
       estado: data.estado,
       cidade: data.cidade,
