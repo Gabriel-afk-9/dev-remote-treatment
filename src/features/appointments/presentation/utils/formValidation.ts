@@ -38,7 +38,9 @@ export function validateStep(step: number, data: FormInscricao): FormErrors {
     } else if (!EMAIL_REGEX.test(data.emailNotificacao)) {
       errors.emailNotificacao = "E-mail inválido.";
     }
-    if (data.celular.trim() && !isValidPhone(data.celular)) {
+    if (!data.celular.trim()) {
+      errors.celular = "Informe o número de celular.";
+    } else if (!isValidPhone(data.celular)) {
       errors.celular = "Número de celular inválido.";
     }
     if (data.tipoWhatsApp === "OUTRO_NUMERO") {

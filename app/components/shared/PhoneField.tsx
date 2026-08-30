@@ -47,11 +47,13 @@ export function PhoneField({
   onChange,
   required = false,
   disabled = false,
+  hasError = false
 }: {
   value: string;
   onChange: (value: string) => void;
   required?: boolean;
   disabled?: boolean;
+  hasError?: boolean
 }) {
   return (
     <PhoneInput
@@ -65,11 +67,15 @@ export function PhoneField({
       value={value}
       onChange={(newValue) => onChange(newValue ?? "")}
       countrySelectComponent={PhoneCountrySelect}
-      className={`phone-input-custom input input-bordered bg-background border-neutral/20 focus:border-brand flex items-center gap-1 text-foreground${
-        disabled ? " opacity-50" : ""
-      }`}
+      className={`phone-input-custom input input-bordered bg-background flex items-center gap-1 text-foreground pl-1 ${
+        hasError
+          ? "border-error focus:border-error"
+          : "border-neutral/20 focus:border-brand"
+      }${disabled ? " opacity-50" : ""}`}
       numberInputProps={{
         required,
+        "aria-invalid": hasError,
+        "aria-describedby": hasError ? "erro-celular" : undefined,
         className:
           "bg-transparent border-0 outline-none text-foreground placeholder:text-neutral/60 w-full h-full min-w-0",
       }}

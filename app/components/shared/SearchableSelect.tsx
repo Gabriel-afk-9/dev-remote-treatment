@@ -10,6 +10,7 @@ export interface SelectOption {
   name: string;
   leading?: ReactNode;
   searchText?: string;
+  hasError?: boolean;
 }
 
 function normalize(value: string): string {
@@ -27,6 +28,7 @@ export function SearchableSelect({
   leadingIcon,
   disabled = false,
   className = "",
+  hasError
 }: {
   options: SelectOption[];
   value: string;
@@ -38,6 +40,7 @@ export function SearchableSelect({
   leadingIcon?: ReactNode;
   disabled?: boolean;
   className?: string;
+  hasError?: boolean
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -93,8 +96,12 @@ export function SearchableSelect({
     ? `relative w-full max-w-[20rem] ${className}`
     : `relative ${className}`;
   const triggerClass = bordered
-    ? "input input-bordered bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 pr-9 cursor-pointer"
-    : "bg-transparent border-0 outline-none text-foreground placeholder:text-neutral/60 w-14 pl-7 pr-6 cursor-pointer";
+  ? `input input-bordered bg-background text-foreground placeholder:text-neutral/60 pr-9 cursor-pointer ${
+      hasError
+        ? "border-error focus:border-error"
+        : "border-neutral/20 focus:border-brand"
+    }`
+  : `bg-transparent border-0 outline-none text-foreground placeholder:text-neutral/60 w-14 pl-7 pr-6 cursor-pointer`;
   const triggerStateClass = disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer";
   const popoverClass = bordered
     ? "z-[100] rounded-lg border border-neutral/20 bg-background shadow-lg overflow-hidden"

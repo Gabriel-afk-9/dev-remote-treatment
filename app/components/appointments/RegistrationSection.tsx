@@ -251,63 +251,57 @@ export function RegistrationSection() {
               {step === 0 && (
                 <div className="gap-4 grid md:grid-cols-2">
                   <label className="flex flex-col form-control">
-                    <span className="mb-2 font-medium text-foreground text-sm label-text">
-                      Nome completo
+                    <span
+                      className={`mb-2 font-medium text-sm label-text ${
+                        errors.nomeCompleto ? "text-error" : "text-foreground"
+                      }`}
+                    >
+                      Nome completo*
                     </span>
                     <input
                       required
                       aria-invalid={!!errors.nomeCompleto}
-                      aria-describedby={
-                        errors.nomeCompleto ? "erro-nomeCompleto" : undefined
-                      }
-                      className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
+                      className={`bg-background text-foreground placeholder:text-neutral/60 input input-bordered ${
+                        errors.nomeCompleto
+                          ? "border-error focus:border-error"
+                          : "border-neutral/20 focus:border-brand"
+                      }`}
                       placeholder="Ex.: Maria Oliveira"
                       value={formData.nomeCompleto}
                       onChange={updateField("nomeCompleto")}
                     />
-                    {errors.nomeCompleto && (
-                      <p
-                        id="erro-nomeCompleto"
-                        role="alert"
-                        className="mt-1 text-error text-sm"
-                      >
-                        {errors.nomeCompleto}
-                      </p>
-                    )}
                   </label>
                   <label className="flex flex-col form-control">
-                    <span className="mb-2 font-medium text-foreground text-sm label-text">
-                      Data de nascimento
+                    <span
+                      className={`mb-2 font-medium text-sm label-text ${
+                        errors.dataNascimento ? "text-error" : "text-foreground"
+                      }`}
+                    >
+                      Data de nascimento*
                     </span>
                     <input
                       required
                       aria-invalid={!!errors.dataNascimento}
-                      aria-describedby={
-                        errors.dataNascimento
-                          ? "erro-dataNascimento"
-                          : undefined
-                      }
                       type="text"
                       inputMode="numeric"
                       placeholder="DD/MM/AAAA"
                       maxLength={10}
-                      className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
+                      className={`bg-background text-foreground placeholder:text-neutral/60 input input-bordered ${
+                        errors.dataNascimento
+                          ? "border-error focus:border-error"
+                          : "border-neutral/20 focus:border-brand"
+                      }`}
                       value={nascimentoDisplay}
                       onChange={handleNascimentoChange}
                     />
-                    {errors.dataNascimento && (
-                      <p
-                        id="erro-dataNascimento"
-                        role="alert"
-                        className="mt-1 text-error text-sm"
-                      >
-                        {errors.dataNascimento}
-                      </p>
-                    )}
                   </label>
                   <label className="flex flex-col min-w-0 form-control">
-                    <span className="mb-2 font-medium text-foreground text-sm label-text">
-                      País
+                    <span
+                      className={`mb-2 font-medium text-sm label-text ${
+                        errors.pais ? "text-error" : "text-foreground"
+                      }`}
+                    >
+                      País*
                     </span>
                     <SearchableSelect
                       options={countries}
@@ -315,20 +309,16 @@ export function RegistrationSection() {
                       onChange={handlePaisSelect}
                       placeholder="Selecione o país"
                       searchPlaceholder="Digite o nome do país..."
+                      hasError={!!errors.pais}
                     />
-                    {errors.pais && (
-                      <p
-                        id="erro-pais"
-                        role="alert"
-                        className="mt-1 text-error text-sm"
-                      >
-                        {errors.pais}
-                      </p>
-                    )}
                   </label>
                   <label className="flex flex-col min-w-0 form-control">
-                    <span className="mb-2 font-medium text-foreground text-sm label-text">
-                      Estado
+                    <span
+                      className={`mb-2 font-medium text-sm label-text ${
+                        errors.estado ? "text-error" : "text-foreground"
+                      }`}
+                    >
+                      Estado*
                     </span>
                     {hasStates(codeByName[formData.pais]) ? (
                       <SearchableSelect
@@ -337,180 +327,70 @@ export function RegistrationSection() {
                         onChange={handleEstadoSelect}
                         placeholder="Selecione o estado"
                         searchPlaceholder="Digite o nome do estado..."
+                        hasError={!!errors.estado}
                       />
                     ) : (
                       <input
                         aria-invalid={!!errors.estado}
-                        aria-describedby={
-                          errors.estado ? "erro-estado" : undefined
-                        }
-                        className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
+                        className={`bg-background text-foreground placeholder:text-neutral/60 input input-bordered ${
+                          errors.estado
+                            ? "border-error focus:border-error"
+                            : "border-neutral/20 focus:border-brand"
+                        }`}
                         placeholder="Ex.: Piauí"
                         value={formData.estado}
                         onChange={updateField("estado")}
                       />
                     )}
-                    {errors.estado && (
-                      <p
-                        id="erro-estado"
-                        role="alert"
-                        className="mt-1 text-error text-sm"
-                      >
-                        {errors.estado}
-                      </p>
-                    )}
                   </label>
                   <label className="flex flex-col form-control">
-                    <span className="mb-2 font-medium text-foreground text-sm label-text">
-                      Cidade
+                    <span
+                      className={`mb-2 font-medium text-sm label-text ${
+                        errors.cidade ? "text-error" : "text-foreground"
+                      }`}
+                    >
+                      Cidade*
                     </span>
                     <input
                       required
                       aria-invalid={!!errors.cidade}
-                      aria-describedby={
-                        errors.cidade ? "erro-cidade" : undefined
-                      }
                       autoComplete="address-level2"
-                      className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
+                      className={`bg-background text-foreground placeholder:text-neutral/60 input input-bordered ${
+                        errors.cidade
+                          ? "border-error focus:border-error"
+                          : "border-neutral/20 focus:border-brand"
+                      }`}
                       placeholder="Parnaíba"
                       value={formData.cidade}
                       onChange={updateField("cidade")}
                     />
-                    {errors.cidade && (
-                      <p
-                        id="erro-cidade"
-                        role="alert"
-                        className="mt-1 text-error text-sm"
-                      >
-                        {errors.cidade}
-                      </p>
-                    )}
                   </label>
                   <label className="flex flex-col form-control">
-                    <span className="mb-2 font-medium text-foreground text-sm label-text">
-                      Endereço
+                    <span
+                      className={`mb-2 font-medium text-sm label-text ${
+                        errors.endereco ? "text-error" : "text-foreground"
+                      }`}
+                    >
+                      Endereço*
                     </span>
                     <input
                       required
                       aria-invalid={!!errors.endereco}
-                      aria-describedby={
-                        errors.endereco ? "erro-endereco" : undefined
-                      }
-                      className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
+                      className={`bg-background text-foreground placeholder:text-neutral/60 input input-bordered ${
+                        errors.endereco
+                          ? "border-error focus:border-error"
+                          : "border-neutral/20 focus:border-brand"
+                      }`}
                       placeholder="Rua, número, bairro e complemento"
                       value={formData.endereco}
                       onChange={updateField("endereco")}
                     />
-                    {errors.endereco && (
-                      <p
-                        id="erro-endereco"
-                        role="alert"
-                        className="mt-1 text-error text-sm"
-                      >
-                        {errors.endereco}
-                      </p>
-                    )}
                   </label>
                 </div>
               )}
 
               {step === 1 && (
                 <div className="gap-4 grid md:grid-cols-2">
-                  <label className="flex flex-col form-control">
-                    <span className="flex items-center gap-2 mb-2 font-medium text-foreground text-sm label-text">
-                      <Mail size={14} />
-                      E-mail de notificação
-                    </span>
-                    <input
-                      required
-                      aria-invalid={!!errors.emailNotificacao}
-                      aria-describedby={
-                        errors.emailNotificacao
-                          ? "erro-emailNotificacao"
-                          : undefined
-                      }
-                      type="email"
-                      className="bg-background border-neutral/20 focus:border-brand text-foreground placeholder:text-neutral/60 input input-bordered"
-                      placeholder="contato@exemplo.com"
-                      value={formData.emailNotificacao}
-                      onChange={updateField("emailNotificacao")}
-                    />
-                    {errors.emailNotificacao && (
-                      <p
-                        id="erro-emailNotificacao"
-                        role="alert"
-                        className="mt-1 text-error text-sm"
-                      >
-                        {errors.emailNotificacao}
-                      </p>
-                    )}
-                  </label>
-                  <label className="flex flex-col form-control">
-                    <span className="flex items-center gap-2 mb-2 font-medium text-foreground text-sm label-text">
-                      <Phone size={14} />
-                      Celular
-                    </span>
-                    <PhoneField
-                      value={formData.celular}
-                      onChange={(value) => {
-                        setFormData((prev) => ({ ...prev, celular: value }));
-                        clearError("celular");
-                      }}
-                    />
-                    {errors.celular && (
-                      <p
-                        id="erro-celular"
-                        role="alert"
-                        className="mt-1 text-error text-sm"
-                      >
-                        {errors.celular}
-                      </p>
-                    )}
-                  </label>
-                  <label className="flex flex-col form-control">
-                    <span className="mb-2 font-medium text-foreground text-sm label-text">
-                      É Whatsapp?
-                    </span>
-                    <select
-                      className="bg-background border-neutral/20 focus:border-brand text-foreground select-bordered select"
-                      value={formData.tipoWhatsApp}
-                      onChange={(event) => {
-                        updateField("tipoWhatsApp")(event);
-                        clearError("whatsappAuxiliar");
-                      }}
-                    >
-                      <option value="E_WHATSAPP">Sim</option>
-                      <option value="NAO_TEM">Não Tenho</option>
-                      <option value="OUTRO_NUMERO">
-                        Adicionar Whatsapp Auxiliar
-                      </option>
-                    </select>
-                  </label>
-                  <label className="flex flex-col form-control">
-                    <span className="flex items-center gap-2 mb-2 font-medium text-foreground text-sm label-text">
-                      <MessageCircle size={14} /> WhatsApp Auxiliar
-                    </span>
-                    <PhoneField
-                      value={formData.whatsappAuxiliar ?? ""}
-                      onChange={(value) => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          whatsappAuxiliar: value,
-                        }));
-                        clearError("whatsappAuxiliar");
-                      }}
-                      disabled={formData.tipoWhatsApp !== "OUTRO_NUMERO"}
-                    />
-                    {errors.whatsappAuxiliar && (
-                      <p
-                        id="erro-whatsappAuxiliar"
-                        role="alert"
-                        className="mt-1 text-error text-sm"
-                      >
-                        {errors.whatsappAuxiliar}
-                      </p>
-                    )}
-                  </label>
                   <label className="flex flex-col form-control">
                     <span className="mb-2 font-medium text-foreground text-sm label-text">
                       Nome do solicitante (Opcional)
@@ -523,11 +403,113 @@ export function RegistrationSection() {
                     />
                   </label>
                   <label className="flex flex-col form-control">
-                    <span className="flex items-center gap-2 mb-2 font-extralight text-brand text-sm label-text">
+                    <span
+                      className={`flex items-center gap-2 mb-2 font-medium text-sm label-text ${
+                        errors.emailNotificacao ? "text-error" : "text-foreground"
+                      }`}
+                    >
+                      <Mail size={14} />
+                      E-mail de notificação*
+                    </span>
+                    <input
+                      required
+                      aria-invalid={!!errors.emailNotificacao}
+                      autoComplete="email"
+                      aria-describedby={
+                        errors.emailNotificacao
+                          ? "erro-emailNotificacao"
+                          : undefined
+                      }
+                      type="email"
+                      className={`bg-background text-foreground placeholder:text-neutral/60 input input-bordered ${
+                        errors.emailNotificacao
+                          ? "border-error focus:border-error"
+                          : "border-neutral/20 focus:border-brand"
+                      }`}
+                      placeholder="contato@exemplo.com"
+                      value={formData.emailNotificacao}
+                      onChange={updateField("emailNotificacao")}
+                    />  
+                  </label>
+                  <div className="flex flex-col gap-3">
+                    <label className="flex flex-col form-control">
+                      <span
+                        className={`flex items-center gap-2 mb-2 font-medium text-sm label-text ${
+                          errors.celular ? "text-error" : "text-foreground"
+                        }`}
+                      >
+                        <Phone size={14} />
+                        Celular*
+                      </span>
+                      <PhoneField
+                        value={formData.celular}
+                        onChange={(value) => {
+                          setFormData((prev) => ({ ...prev, celular: value }));
+                          clearError("celular");
+                        }}
+                        hasError={!!errors.celular}
+                      />
+                    </label>
+                    <label className="flex flex-col form-control">
+                      {/* <span className="mb-2 font-medium text-foreground text-sm label-text">
+                        WhatsApp
+                      </span> */}
+                      <label className="px-0 py-0 border-0 rounded-sm max-w-80 cursor-pointer label">
+                        <input
+                          type="checkbox"
+                          className="border-neutral/30 checkbox checkbox-accent [--chkbg:var(--brand)] [--chkfg:var(--background)]"
+                          checked={formData.tipoWhatsApp === "E_WHATSAPP"}
+                          onChange={(e) => {
+                            setFormData((prev) => ({
+                              ...prev,
+                              tipoWhatsApp: e.target.checked
+                                ? "E_WHATSAPP"
+                                : prev.whatsappAuxiliar?.trim()
+                                ? "OUTRO_NUMERO" :
+                                "NAO_TEM",
+                            }));
+                          }}
+                        />
+                        <span className="text-foreground label-text">
+                          Este número é WhatsApp
+                        </span>
+                      </label>
+                    </label>
+                  </div>  
+                  
+                  <label className="flex flex-col form-control">
+                      <span className="flex items-center gap-2 mb-2 font-medium text-foreground text-sm label-text">
+                        <MessageCircle size={14} /> WhatsApp Auxiliar (Opcional)
+                      </span>
+                      <PhoneField
+                        value={formData.whatsappAuxiliar ?? ""}
+                        onChange={(value) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            whatsappAuxiliar: value,
+                            tipoWhatsApp: value.trim() ? "OUTRO_NUMERO" : "NAO_TEM"
+                          }));
+                          clearError("whatsappAuxiliar");
+                        }}
+                        disabled={formData.tipoWhatsApp === "E_WHATSAPP"}
+                      />
+                      {errors.whatsappAuxiliar && (
+                        <p
+                          id="erro-whatsappAuxiliar"
+                          role="alert"
+                          className="mt-1 text-error text-sm"
+                        >
+                          {errors.whatsappAuxiliar}
+                        </p>
+                      )}
+                    </label>
+
+                  <label className="flex flex-col form-control">
+                    <span className="flex items-center gap-2 mt-2 font-extralight text-brand text-sm label-text">
                       <Megaphone size={14} /> As cirurgias acontecem na última
                       sexta-feira do mês.
                     </span>
-                    <label className="px-3 py-2 border border-neutral/20 rounded-sm max-w-80 cursor-pointer label">
+                    <label className="px-0 py-0 border-0 rounded-sm max-w-80 cursor-pointer label h-10">
                       <input
                         type="checkbox"
                         className="border-neutral/30 checkbox checkbox-accent [--chkbg:var(--brand)] [--chkfg:var(--background)]"
@@ -542,7 +524,7 @@ export function RegistrationSection() {
                         }}
                       />
                       <span className="text-foreground label-text">
-                        Tratamento com Cirurgia
+                        Desejo o Tratamento com Cirurgia
                       </span>
                     </label>
                   </label>
