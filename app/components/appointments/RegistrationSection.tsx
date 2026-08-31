@@ -429,7 +429,7 @@ export function RegistrationSection() {
                       placeholder="contato@exemplo.com"
                       value={formData.emailNotificacao}
                       onChange={updateField("emailNotificacao")}
-                    />  
+                    />
                   </label>
                   <div className="flex flex-col gap-3">
                     <label className="flex flex-col form-control">
@@ -475,8 +475,8 @@ export function RegistrationSection() {
                         </span>
                       </label>
                     </label>
-                  </div>  
-                  
+                  </div>
+
                   <label className="flex flex-col form-control">
                       <span className="flex items-center gap-2 mb-2 font-medium text-foreground text-sm label-text">
                         <MessageCircle size={14} /> WhatsApp Auxiliar (Opcional)
@@ -627,7 +627,7 @@ export function RegistrationSection() {
                 </div>
               )}
 
-              <div className="flex flex-wrap justify-between items-center gap-3 pt-6 border-neutral/10 border-t">
+              <div className="flex flex-wrap justify-between items-center gap-2 pt-6 border-neutral/10 border-t sm:gap-3">
                 <button
                   type="button"
                   className="gap-2 bg-background hover:bg-brand border-brand/20 hover:border-brand text-foreground hover:text-background btn"
@@ -649,7 +649,8 @@ export function RegistrationSection() {
                       <ArrowRight size={16} />
                     </button>
                   ) : (
-                    <SubmitButton
+                      <SubmitButton
+                        className="w-35 sm:w-auto"
                       text="Finalizar inscrição"
                       icon={<CheckCheck size={16} />}
                     />
@@ -663,4 +664,3 @@ export function RegistrationSection() {
     </section>
   );
 }
-

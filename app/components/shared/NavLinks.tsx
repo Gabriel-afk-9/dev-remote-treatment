@@ -41,7 +41,7 @@ export function NavLinks() {
   const activeCls = "bg-brand text-background";
 
   return (
-    <div className="flex max-sm:flex-col items-center gap-2 sm:gap-3">
+    <div className="flex max-sm:flex-row items-center gap-2 sm:gap-3">
       {SECTIONS.map(({ id, label, icon: Icon, href }) => (
         <Link
           key={id}
@@ -50,16 +50,22 @@ export function NavLinks() {
           className={`${base} ${active === id ? activeCls : inactive}`}
         >
           <Icon size={16} />
-          {label}
+          <span className={`${active === id ? "inline" : "hidden"} sm:inline`}>
+               {label}
+             </span>
+
         </Link>
       ))}
 
       <Link
         href="/tratamento"
+        onClick={() => setActive("tratamento")}
         className={`${base} ${pathname.startsWith("/tratamento") ? activeCls : inactive}`}
       >
         <User size={16} />
-        Acompanhar Tratamento
+        <span className={`${pathname.startsWith("/tratamento") ? "inline" : "hidden"} sm:inline`}>
+                  Acompanhar Tratamento
+                </span>
       </Link>
     </div>
   );

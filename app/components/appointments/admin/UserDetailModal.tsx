@@ -91,7 +91,7 @@ export function UserDetailModal({ agendamento, onClose, onUpdate, onDelete }: Us
   };
 
   return (
-    <div className="modal-bottom modal modal-open sm:modal-middle">
+    <div className=" modal modal-open  sm:modal-middle">
       <div className="bg-card p-0 border border-neutral/15 sm:rounded-3xl rounded-t-3xl max-w-4xl overflow-hidden modal-box">
 
         <div className="flex justify-between items-center bg-background/50 p-6 border-neutral/10 border-b">
